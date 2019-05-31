@@ -1,0 +1,24 @@
+project: beetl
+
+spring:
+#  profiles:
+#    active: dev
+  mvc:
+    view:
+      prefix: /pages
+
+
+beetl:
+  delimiter-statement-start: \@
+  delimiter-statement-end:
+  resource-auto-check: true         #热加载beetl模板，开发时候用
+  resource-tagroot: common/tags
+  resource-tagsuffix: tag
+
+
+server:
+  port: 5050
+  servlet:
+    context-path: /${project}
+  tomcat:
+    uri-encoding: utf-8

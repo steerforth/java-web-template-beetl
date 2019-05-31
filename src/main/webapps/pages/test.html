@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>base</title>
+    </head>
+    <body>
+        <%
+        /*注意：定界符\<\%\%\>里面， 不允许放占位符\$\{\}*/
+        %>
+        <div>1.页面定义变量
+            <%
+            var a = 2;
+            var b = 3;
+            var result = a+b;
+            %>
+            计算：2+3=${result}
+            ${{"id":"123456"\}}
+        </div>
+        <div>
+            2.获取全局变量:
+            ${global}
+        </div>
+        <div>3.循环语句
+            <div> 3.1for-in循环   1userLP是隐含变量，能在循环体中使用
+                <%
+                var users = [{"name":"zhangsan"},{"name":"lisi"}];
+                %>
+                <%for(user in users){%>
+                <div style="color: red">下标：${userLP.index}  名称：${user.name}</div>
+                <%}%>
+                总共有${users.~size}个
+            </div>
+            <div>
+                3.2for(exp;exp;exp)循环：
+                <br>
+                <%
+                var list = ["1","2","3"];
+                for(var i=0;i<list.~size;i++){
+                print(list[i]+"\n");
+                }
+                %>
+            </div>
+            <div>
+                3.3elsefor:
+                <br>
+                <%
+                var list2 = [];
+                for(item in list2){
+
+                }elsefor{
+                    print("未有记录");
+                }
+                %>
+            </div>
+        </div>
+        <div>
+            4.条件语句
+            select-case 是switch case的增强版。他允许case 里有逻辑表达式，同时，也不需要每个case都break一下，默认遇到合乎条件的case执行后就退出。
+            <br>
+            <%
+            var e = 1;
+            select(e){
+            case 0,1:
+            print("it's small int");
+            case 2,3:
+            print("it's big int");
+            default:
+            print("error");
+            }
+            %>
+        </div>
+        <div>
+            5.调用beetl内置函数
+            <br>
+            <%
+            var date = date();
+            var len = strutil.length("cbd");
+            println("date="+date);
+            println("len="+len);
+            %>
+            <br>
+            ${date,dateFormat="yyyy-MM-dd"};
+        </div>
+        <div>
+            6.安全输出   user或者user.birthday不存在
+            <br>
+            ${user.birthday!"我是安全输出的默认值"}
+        </div>
+        <div>
+            7.判断变量是否存在
+            <br>
+            <%
+            if(!has(flag)){
+                print("flag变量不存在，不可以访问");
+            }
+            %>
+        </div>
+        <div>
+            8.标签函数
+            <br>
+            <%layout("layout.html",{"title":"我只是传入的参数"}){
+            %>
+                我是个性化内容！
+            <%}%>
+        </div>
+        <div>
+            9.调用java函数
+            <br>
+            我来自java函数:${@com.steer.beetl.entity.User.getMoney()}
+        </div>
+        <div>
+            10.我是自定义函数
+            <br>
+           <% /*customFunction("123");*/%>
+        </div>
+        <div>10.获取后台返回的数据：${username}</div>
+    </body>
+</html>
