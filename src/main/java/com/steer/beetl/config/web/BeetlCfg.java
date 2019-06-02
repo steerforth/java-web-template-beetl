@@ -1,16 +1,11 @@
 package com.steer.beetl.config.web;
 
 import com.steer.beetl.config.properties.BeetlProperties;
-import com.steer.beetl.function.CustomFunc;
 import org.beetl.core.resource.ClasspathResourceLoader;
-import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class BeetlCfg {
@@ -21,14 +16,8 @@ public class BeetlCfg {
      * beetl的配置
      */
     @Bean(initMethod = "init")
-    public BeetlGroupUtilConfiguration beetlConfiguration() {
-        BeetlGroupUtilConfiguration beetlConfiguration = new BeetlGroupUtilConfiguration();
-        //设置共享变量，所有模板都可以使用
-        Map<String,Object> map = new HashMap<>();
-        map.put("global","我是全局变量");
-        beetlConfiguration.setSharedVars(map);
-        //注册自定义函数
-//        beetlConfiguration.getGroupTemplate().registerFunction("customFunction()",new CustomFunc());
+    public BeetlConfiguration beetlConfiguration() {
+        BeetlConfiguration beetlConfiguration = new BeetlConfiguration();
         //设置资源路径
         beetlConfiguration.setResourceLoader(new ClasspathResourceLoader(BeetlCfg.class.getClassLoader(), beetlProperties.getPrefix()));
         beetlConfiguration.setConfigProperties(beetlProperties.getProperties());
@@ -44,7 +33,7 @@ public class BeetlCfg {
         beetlSpringViewResolver.setConfig(beetlConfiguration());
         beetlSpringViewResolver.setContentType("text/html;charset=UTF-8");
         beetlSpringViewResolver.setOrder(0);
-        beetlSpringViewResolver.setSuffix(".html");
+//        beetlSpringViewResolver.setSuffix(".html");
         return beetlSpringViewResolver;
     }
 

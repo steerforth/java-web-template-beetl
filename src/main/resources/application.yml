@@ -5,15 +5,20 @@ spring:
 #    active: dev
   mvc:
     view:
-      prefix: /pages
+      prefix: /WEB-INF/view/
+    static-path-pattern: /static/**
+#  resources:
+#    static-locations: ["classpath:static/**"]
 
 
 beetl:
-  delimiter-statement-start: \@
-  delimiter-statement-end:
+  #delimiter-statement-start: \@
+  #delimiter-statement-end:
   resource-auto-check: true         #热加载beetl模板，开发时候用
   resource-tagroot: common/tags
   resource-tagsuffix: tag
+  webapp-ext: com.steer.beetl.extern.global.GlobalExt
+  error-handler: org.beetl.ext.web.WebErrorHandler #在页面输出错误提示信息
 
 
 server:

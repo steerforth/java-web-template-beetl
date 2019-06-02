@@ -1,4 +1,4 @@
-package com.steer.beetl.function;
+package com.steer.beetl.extern.function;
 
 import org.beetl.core.Context;
 import org.beetl.core.Function;
@@ -14,11 +14,12 @@ public class CustomFunc implements Function {
         Object o = objects[0];
         if (o != null){
             try{
+                //传入的参数是什么，就返回输出什么
                 context.byteWriter.write(o.toString().getBytes());
             }catch (IOException e){
                 throw new RuntimeException(e);
             }
         }
-        return "1";
+        return "";
     }
 }

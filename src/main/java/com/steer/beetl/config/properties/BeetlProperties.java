@@ -21,6 +21,10 @@ public class BeetlProperties {
 
     private String resourceAutoCheck;
 
+    private String webappExt;
+
+    private String errorHandler;
+
     @Value("${spring.mvc.view.prefix}")
     private String prefix;
 
@@ -47,6 +51,9 @@ public class BeetlProperties {
 //        if (ToolUtil.isNotEmpty(resourceAutoCheck)) {
 //            properties.setProperty("RESOURCE.autoCheck", resourceAutoCheck);
 //        }
+        properties.setProperty("WEBAPP_EXT",webappExt);
+
+        properties.setProperty("ERROR_HANDLER",errorHandler);
         return properties;
     }
 
@@ -90,7 +97,24 @@ public class BeetlProperties {
         return resourceAutoCheck;
     }
 
+    public String getWebappExt() {
+        return webappExt;
+    }
+
+    public void setWebappExt(String webappExt) {
+        this.webappExt = webappExt;
+    }
+
     public void setResourceAutoCheck(String resourceAutoCheck) {
         this.resourceAutoCheck = resourceAutoCheck;
     }
+
+    public String getErrorHandler() {
+        return errorHandler;
+    }
+
+    public void setErrorHandler(String errorHandler) {
+        this.errorHandler = errorHandler;
+    }
 }
+

@@ -83,7 +83,7 @@
             ${date,dateFormat="yyyy-MM-dd"};
         </div>
         <div>
-            6.安全输出   user或者user.birthday不存在
+            6.安全输出   user或者user.birthday不存在。变量不存在或空指针的处理
             <br>
             ${user.birthday!"我是安全输出的默认值"}
         </div>
@@ -97,23 +97,99 @@
             %>
         </div>
         <div>
-            8.标签函数
+            8.页面布局
+            8.1layout
             <br>
-            <%layout("layout.html",{"title":"我只是传入的参数"}){
+            <%layout("layout.html",{"title":"我只是layout传入的参数"}){
             %>
                 我是个性化内容！
             <%}%>
+            <br>
+            8.2include
+            <br>
+            <%
+            include("/include.html",{"ttttt":"我是include传入的参数"}){}
+            %>
+            <h1>你好啊<h1>
         </div>
         <div>
-            9.调用java函数
+            9.调用java函数,可以调用instance的public方法和属性，也可以调用静态类的属性和方法
             <br>
             我来自java函数:${@com.steer.beetl.entity.User.getMoney()}
         </div>
         <div>
-            10.我是自定义函数
+            10.自定义函数
             <br>
-           <% /*customFunction("123");*/%>
+           <% customFunc(["555","123","444"]);%>
         </div>
-        <div>10.获取后台返回的数据：${username}</div>
+        <div>
+            11.自定义beetl标签,以#开头，如设定HTML_TAG_FLAG=#
+            <br>
+            <#simpleTag attr="111111">aaaaa</#simpleTag>
+        </div>
+        <div>12.获取后台返回的数据：
+            <br>
+            ${username}
+        </div>
+        <div>
+            13.beetl的默认标签eg.form,input.并不包含父子关系，如果想在标签传递参数，可以使用pageCtx函数
+            <%
+            var p1 = pageCtx("param1",{"user":"abc"});
+            %>
+            <form>
+                <%
+                /*从pageCtx中获取param1的值*/
+                var u1 = pageCtx("param1");
+                var v1 = u1.user;
+                var v2 = u1["user"];
+                %>
+                <input value=${v1} />
+                <input value=${v2} />
+            </form>
+        </div>
+        <div>
+            14.自定义格式化函数
+            <br>
+            <%
+            var date2 = date();
+            %>
+            ${date2,customFormat="yyyy:MM"},
+        </div>
+        <div>
+            15.全局扩展属性：
+            <br>
+            ${sysVersion}
+        </div>
+        <div>
+            16.beetl内置参数:
+            <br>
+            项目路径：${ctxPath}
+        </div>
+        <div>
+            17.beetl:ajax+HTML模式，局部刷新页面
+            <div id="ajaxDiv">
+                <%#ajax ajaxTest: {%>
+                <div>
+                    123${content}
+                </div>
+                <%}%>
+            </div>
+        </div>
+
+
+    <script src="${ctxPath}/static/common/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $.get("${ctxPath}/test/json",function (data) {
+                console.info(data);
+            });
+            //比如进入该页面立马加载第一页，然后ajax+html在第二页时异步局部刷新第二页的内容
+            $.get("${ctxPath}/test/ajax",function (data) {
+                console.info(data);
+                $("#ajaxDiv").html(data+"<div>456</div>");
+            });
+        });
+
+    </script>
     </body>
 </html>
